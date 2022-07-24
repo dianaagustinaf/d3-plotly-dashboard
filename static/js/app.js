@@ -90,7 +90,8 @@ function charts(individual) {
         orientation: 'h',
         type: 'bar',
         marker: {
-            color: 'rgba(55,128,191,0.6)',
+            color: 'orange',
+            opacity: 0.5,
             width: 1
         }
     };
@@ -113,11 +114,42 @@ Use sample_values for the marker size.
 Use otu_ids for the marker colors.
 Use otu_labels for the text values.
  */
+  
+// indiv_data = samples.filter(ind => ind.id == individual);
+
+    let datalength = indiv_data[0].sample_values.lengh;
+    let xdataB = indiv_data[0].otu_ids;
+    let ydataB = indiv_data[0].sample_values;
+    let otu_hoverB = indiv_data[0].otu_labels;
+
+    console.log(xdataB)
+    console.log(ydataB)
+    console.log(otu_hoverB)
+
+    var trace2 = {
+        x: xdataB,
+        y: ydataB,
+        mode: 'markers',
+        text: otu_hoverB,
+        marker: {
+            color: xdataB,
+            size: ydataB
+        }
+    };
+
+    var dataB = [trace2];
+
+    var layout = {
+        title: 'Each sample OTUs found in selected individual',
+    };
+
+    Plotly.newPlot('bubble', dataB, layout);
 
 
 
     });
 };
+
 
 charts(1601);
 
