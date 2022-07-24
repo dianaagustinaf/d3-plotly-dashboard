@@ -32,6 +32,9 @@
  */
 
 
+// let individual = 1601
+
+
 function charts(individual) {
 
 
@@ -48,11 +51,9 @@ function charts(individual) {
         ids = data.names;
         metadata = data.metadata;
         samples = data.samples;
-        console.log(ids);
+        // console.log(ids);
         // console.log(metadata);
         // console.log(samples);
-
-    
 
 
     // BAR CHART
@@ -62,47 +63,56 @@ function charts(individual) {
     Use otu_labels as the hovertext for the chart.
     */
 
-    // let individual = 1601
     let top = 10;
     let i = 0;
     let xdata = [];
     let ydata = [];
     let otu_hover = [];
 
-
-
     let indiv_data = samples.filter(ind => ind.id == individual);
-    //samples[individual];
-    console.log(indiv_data);
+    // console.log(indiv_data);
 
     while (i<top) {
         xdata[i] = indiv_data[0].sample_values[i];
-        ydata[i] = indiv_data[0].otu_ids[i];
+        ydata[i] = "OTU " + indiv_data[0].otu_ids[i];
         otu_hover[i] = indiv_data[0].otu_labels[i];
         i++;
     }
 
+    // console.log(xdata)
+    // console.log(ydata)
+    // console.log(otu_hover)
+
     var trace1 = {
-        x: xdata,
-        y: ydata,
-        text: otu_hover,
-        name: 'SF Zoo',
+        x: xdata.reverse(),
+        y: ydata.reverse(),
+        text: otu_hover.reverse(),
         orientation: 'h',
+        type: 'bar',
         marker: {
-        color: 'rgba(55,128,191,0.6)',
-        width: 1
-        },
-        type: 'bar'
+            color: 'rgba(55,128,191,0.6)',
+            width: 1
+        }
     };
     
     var data = [trace1];
     
     var layout = {
         title: 'Top 10 OTUs found in selected individual',
-        barmode: 'stack'
+        //barmode: 'stack'
     };
     
     Plotly.newPlot('bar', data, layout);
+
+
+/**
+ * BUBBLE CHART
+Use otu_ids for the x values.
+Use sample_values for the y values.
+Use sample_values for the marker size.
+Use otu_ids for the marker colors.
+Use otu_labels for the text values.
+ */
 
 
 
