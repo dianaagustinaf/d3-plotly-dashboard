@@ -174,7 +174,15 @@ Use otu_labels for the text values.
     let indiv_metadata = metadata.filter(ind => ind.id == individual);
     console.log(indiv_metadata);
 
+    let panel = d3.select("#sample-metadata")
+    panel.html('');
+    Object.entries(indiv_metadata[0]).forEach(([key,value]) => {
+        panel.append('p').text(key.toUpperCase() + ": " + value);
+    });
+
+
     
+
 
 
     });
@@ -185,6 +193,7 @@ function optionChanged(indivID) {
     charts(indivID);
 }
 
+// INIT 
 charts(1601);
 
 
