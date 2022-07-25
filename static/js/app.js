@@ -63,21 +63,27 @@ function charts(individual) {
     Use otu_labels as the hovertext for the chart.
     */
 
+    let indiv_data = samples.filter(ind => ind.id == individual);
+    // console.log(indiv_data);
+
     let top = 10;
     let i = 0;
+    let indiv_samples = indiv_data[0].sample_values;
+    let datalength = indiv_samples.length;
+    console.log(datalength);
+
     let xdata = [];
     let ydata = [];
     let otu_hover = [];
 
-    let indiv_data = samples.filter(ind => ind.id == individual);
-    // console.log(indiv_data);
-
-    while (i<top) {
+    // validation just in case array has less than 10 values
+    while (i<top && i<datalength) {
         xdata[i] = indiv_data[0].sample_values[i];
         ydata[i] = "OTU " + indiv_data[0].otu_ids[i];
         otu_hover[i] = indiv_data[0].otu_labels[i];
         i++;
     }
+    i=0;
 
     // console.log(xdata)
     // console.log(ydata)
@@ -117,14 +123,13 @@ Use otu_labels for the text values.
   
 // indiv_data = samples.filter(ind => ind.id == individual);
 
-    let datalength = indiv_data[0].sample_values.lengh;
     let xdataB = indiv_data[0].otu_ids;
     let ydataB = indiv_data[0].sample_values;
     let otu_hoverB = indiv_data[0].otu_labels;
 
-    console.log(xdataB)
-    console.log(ydataB)
-    console.log(otu_hoverB)
+    // console.log(xdataB)
+    // console.log(ydataB)
+    // console.log(otu_hoverB)
 
     var trace2 = {
         x: xdataB,
@@ -147,6 +152,14 @@ Use otu_labels for the text values.
 
 
 
+
+    let dropd = d3.select("#selDataset");
+    ids.forEach(function(id) {
+    dropd.append('option').text(id);
+    });
+
+
+
     });
 };
 
@@ -154,7 +167,3 @@ Use otu_labels for the text values.
 charts(1601);
 
 
-// let dropd = d3.select("#selDataset");
-// ids.forEach(function(id) {
-//     dropd.append('option').text(id);
-// });
