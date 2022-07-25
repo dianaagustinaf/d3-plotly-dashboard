@@ -1,7 +1,10 @@
-// json exploration:
-// 1 names (list of ids)
-// 2 metadata for each id
-/* example
+/**
+ * JSON / DATA EXPLORATION
+
+1 names (list of ids)
+
+2 metadata for each id
+    example
     {
       "id": 1601,
       "ethnicity": "Caucasian",
@@ -11,9 +14,9 @@
       "bbtype": "I",
       "wfreq": 2.0
     }
-*/
-// 3 samples
-/* example
+
+3 samples
+    example
     {
       "id": "940",
       "otu_ids": [
@@ -31,16 +34,14 @@
     }
  */
 
-
 // let individual = 1601
-
 
 function charts(individual) {
 
-
     // LOAD DATA
 
-    url="https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json"
+    const url="https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json"
+    const url2="../samples.json"
 
     let ids;
     let metadata;
@@ -76,7 +77,7 @@ function charts(individual) {
     let ydata = [];
     let otu_hover = [];
 
-    // validation just in case array has less than 10 values
+    // validation just in case array has less than 10 values   // i.e. case 1287 
     while (i<top && i<datalength) {
         xdata[i] = indiv_data[0].sample_values[i];
         ydata[i] = "OTU " + indiv_data[0].otu_ids[i];
@@ -96,9 +97,12 @@ function charts(individual) {
         orientation: 'h',
         type: 'bar',
         marker: {
-            color: 'orange',
-            opacity: 0.5,
-            width: 1
+            color: 'blue',
+            opacity: 0.3,
+            line: {
+                color: 'black',
+                width: 1
+                }
         }
     };
     
@@ -138,7 +142,8 @@ Use otu_labels for the text values.
         text: otu_hoverB,
         marker: {
             color: xdataB,
-            size: ydataB
+            size: ydataB,
+            colorscale: "Blues"
         }
     };
 
@@ -151,7 +156,9 @@ Use otu_labels for the text values.
     Plotly.newPlot('bubble', dataB, layout);
 
 
-
+    /**
+     * DROPDOWN 
+     */
 
     let dropd = d3.select("#selDataset");
     ids.forEach(function(id) {
@@ -160,10 +167,26 @@ Use otu_labels for the text values.
 
 
 
+    /**
+     * METADATA
+     */
+
+    let indiv_metadata = metadata.filter(ind => ind.id == individual);
+    console.log(indiv_metadata);
+
+    
+
+
     });
 };
 
 
+function optionChanged(indivID) {
+    charts(indivID);
+}
+
 charts(1601);
+
+
 
 
