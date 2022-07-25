@@ -110,6 +110,7 @@ function charts(individual) {
     
     var layout = {
         title: 'Top 10 OTUs found in selected individual',
+        font: { color: "darkblue", family: "Arial" }
         //barmode: 'stack'
     };
     
@@ -151,6 +152,7 @@ Use otu_labels for the text values.
 
     var layout = {
         title: 'Each sample OTUs found in selected individual',
+        font: { color: "darkblue", family: "Arial" }
     };
 
     Plotly.newPlot('bubble', dataB, layout);
@@ -179,9 +181,53 @@ Use otu_labels for the text values.
     Object.entries(indiv_metadata[0]).forEach(([key,value]) => {
         panel.append('p').text(key.toUpperCase() + ": " + value);
     });
+    // Object.values(obj)
+    // Object.keys(obj)
 
 
+    /**
+     *   GAUGE
+     */
+
+    let indiv_wfreq = indiv_metadata[0].wfreq;
     
+    var data3 = [
+        {
+            type: "indicator",
+            mode: "gauge+number+delta",
+            value: indiv_wfreq,
+            title: {text: "Belly Button Washing Frequency"},
+            delta: { reference: 0, increasing: { color: "RebeccaPurple"}},
+
+    // Create gauge range from 0-9
+            gauge: {
+                axis: { range: [null, 9], tickwidth: 1, ticks:9},
+                bar: { color: "RebeccaPurple", opacity:0.5 },
+                steps: [
+                    { range: [0, 1], color: "darkblue", opacity:0.6 },
+                    { range: [1, 2], color: "white"},
+                    { range: [2, 3], color: "darkblue"},
+                    { range: [3, 4], color: "white"},
+                    { range: [4, 5], color: "darkblue"},
+                    { range: [5, 6], color: "white"},
+                    { range: [6, 7], color: "darkblue"},
+                    { range: [7, 8], color: "white"},
+                    { range: [8, 9], color: "darkblue"}
+                ],
+                threshold: {
+                    line: { color: "RebeccaPurple", opacity:0.5, width: 4.5},
+                    thickness: 0.75,
+                    value: indiv_wfreq
+                }
+            }
+        }
+    ];
+
+    var layout3 = { 
+        paper_bgcolor: "lavender",
+        font: { color: "darkblue", family: "Arial" }
+    };
+    Plotly.newPlot('gauge', data3, layout3);
 
 
 
